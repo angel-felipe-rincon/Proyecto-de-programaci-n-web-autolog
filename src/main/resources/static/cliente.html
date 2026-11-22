@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n="titulo.cliente"></title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800&display=swap">
+  <link rel="stylesheet" href="/css/estilos.css">
+</head>
+<body>
+  <a class="visually-hidden-focusable" href="#contenido" data-i18n="comun.saltar"></a>
+  <nav class="navbar navbar-dark barra-vino">
+    <div class="container d-flex flex-wrap gap-2">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="/index.html">
+        <i class="bi bi-car-front-fill" aria-hidden="true"></i><span data-i18n="app.nombre"></span>
+      </a>
+      <div class="d-flex flex-wrap align-items-center gap-2 ms-auto">
+        <span class="badge etiqueta-rol"><i class="bi bi-person" aria-hidden="true"></i> <span data-i18n="rol.CLIENTE"></span></span>
+        <span class="text-white" id="saludo"></span>
+        <div class="btn-group btn-group-sm" role="group" data-i18n-aria="comun.idioma">
+          <button type="button" class="btn btn-outline-light" data-idioma="es">ES</button>
+          <button type="button" class="btn btn-outline-light" data-idioma="en">EN</button>
+          <button type="button" class="btn btn-outline-light" data-idioma="pt">PT</button>
+        </div>
+        <button type="button" class="btn btn-light btn-sm" id="salir">
+          <i class="bi bi-box-arrow-right" aria-hidden="true"></i> <span data-i18n="comun.salir"></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main id="contenido" class="container my-4">
+    <header class="encabezado-panel mb-4">
+      <h1 class="h3 fw-bold mb-2" data-i18n="cli.titulo"></h1>
+      <p class="mb-3" data-i18n="cli.descripcion"></p>
+      <ol class="pasos small mb-0">
+        <li data-i18n="cli.guia1"></li>
+        <li data-i18n="cli.guia2"></li>
+        <li data-i18n="cli.guia3"></li>
+      </ol>
+    </header>
+
+    <div id="avisos" aria-live="polite"></div>
+
+    <section class="mb-4" aria-labelledby="t-alertas">
+      <h2 class="h4 mb-1" id="t-alertas"><i class="bi bi-bell texto-vino" aria-hidden="true"></i> <span data-i18n="cli.alertas"></span></h2>
+      <p class="text-muted small" data-i18n="cli.alertasAyuda"></p>
+      <div id="lista-alertas"></div>
+    </section>
+
+    <section class="mb-4" aria-labelledby="t-vehiculos">
+      <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-1">
+        <h2 class="h4 mb-0" id="t-vehiculos"><i class="bi bi-car-front texto-vino" aria-hidden="true"></i> <span data-i18n="cli.vehiculos"></span></h2>
+        <button type="button" class="btn btn-primary" id="btn-nuevo">
+          <i class="bi bi-plus-lg" aria-hidden="true"></i> <span data-i18n="cli.agregar"></span>
+        </button>
+      </div>
+      <p class="text-muted small" data-i18n="cli.vehiculosAyuda"></p>
+      <div class="row g-3" id="lista-vehiculos"></div>
+    </section>
+
+    <section id="ficha" class="card mb-4 d-none ficha-abierta" aria-labelledby="t-ficha">
+      <div class="card-body p-4">
+        <div class="d-flex flex-wrap justify-content-between align-items-start gap-2">
+          <div>
+            <p class="text-uppercase small text-muted mb-0" data-i18n="cli.fichaDe"></p>
+            <h2 class="h3 fw-bold texto-vino mb-1" id="t-ficha" tabindex="-1"></h2>
+            <p id="ficha-datos" class="mb-0"></p>
+          </div>
+          <button type="button" class="btn btn-outline-secondary btn-sm" id="btn-cerrar-ficha">
+            <i class="bi bi-x-lg" aria-hidden="true"></i> <span data-i18n="cli.cerrarFicha"></span>
+          </button>
+        </div>
+
+        <div class="d-flex flex-wrap gap-2 my-3">
+          <button type="button" class="btn btn-outline-danger btn-sm" id="btn-eliminar">
+            <i class="bi bi-trash" aria-hidden="true"></i> <span data-i18n="comun.eliminar"></span>
+          </button>
+          <button type="button" class="btn btn-primary btn-sm" id="btn-pdf">
+            <i class="bi bi-file-earmark-pdf" aria-hidden="true"></i> <span data-i18n="cli.pdf"></span>
+          </button>
+        </div>
+        <p class="form-text mt-0" data-i18n="cli.eliminarNota"></p>
+
+        <div class="row g-4">
+          <div class="col-md-6">
+            <div class="border rounded p-3 h-100">
+              <form id="form-km">
+                <label for="km-nuevo" class="form-label" data-i18n="cli.actualizarKm"></label>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="km-nuevo" min="0" aria-describedby="km-ayuda" required>
+                  <span class="input-group-text">km</span>
+                  <button class="btn btn-primary" type="submit" data-i18n="comun.guardar"></button>
+                </div>
+                <div id="km-ayuda" class="form-text" data-i18n="cli.kmAyuda"></div>
+              </form>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="border rounded p-3 h-100">
+              <form id="form-talleres">
+                <fieldset>
+                  <legend class="form-label fs-6" data-i18n="cli.talleres"></legend>
+                  <p class="small text-muted" data-i18n="cli.talleresAyuda"></p>
+                  <div id="lista-talleres" class="mb-2"></div>
+                </fieldset>
+                <button class="btn btn-primary btn-sm" type="submit" data-i18n="cli.guardarTalleres"></button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="h5 mt-4 mb-1"><i class="bi bi-clock-history texto-vino" aria-hidden="true"></i> <span data-i18n="hist.titulo"></span></h3>
+        <p class="text-muted small" data-i18n="cli.historialAyuda"></p>
+        <div class="table-responsive tabla-blanca border">
+          <table class="table table-sm table-striped mb-0">
+            <caption class="visually-hidden" data-i18n="hist.titulo"></caption>
+            <thead><tr>
+              <th scope="col" data-i18n="hist.fecha"></th><th scope="col" data-i18n="hist.servicio"></th>
+              <th scope="col" data-i18n="hist.km"></th><th scope="col" data-i18n="hist.taller"></th>
+              <th scope="col" data-i18n="hist.costo"></th><th scope="col" data-i18n="hist.obs"></th>
+            </tr></thead>
+            <tbody id="historial"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal fade" id="modal-vehiculo" tabindex="-1" aria-labelledby="t-modal" aria-hidden="true">
+    <div class="modal-dialog">
+      <form class="modal-content" id="form-vehiculo">
+        <div class="modal-header">
+          <h2 class="modal-title h5" id="t-modal" data-i18n="cli.agregar"></h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" data-i18n-aria="comun.cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <p class="small text-muted" data-i18n="cli.modalCrearAyuda"></p>
+          <div id="avisos-modal"></div>
+          <div class="mb-3"><label class="form-label" for="v-placa" data-i18n="veh.placa"></label>
+            <input class="form-control text-uppercase" id="v-placa" maxlength="10" data-i18n-placeholder="cli.phPlaca"
+                   aria-describedby="v-placa-ayuda" required>
+            <div id="v-placa-ayuda" class="form-text" data-i18n="cli.placaAyuda"></div></div>
+          <div class="row g-3 mb-3">
+            <div class="col-6"><label class="form-label" for="v-marca" data-i18n="veh.marca"></label>
+              <input class="form-control" id="v-marca" maxlength="60" data-i18n-placeholder="cli.phMarca" required></div>
+            <div class="col-6"><label class="form-label" for="v-modelo" data-i18n="veh.modelo"></label>
+              <input class="form-control" id="v-modelo" maxlength="60" data-i18n-placeholder="cli.phModelo" required></div>
+          </div>
+          <div class="mb-3"><label class="form-label" for="v-anio" data-i18n="veh.anio"></label>
+            <input class="form-control" type="number" id="v-anio" min="1950" max="2100" data-i18n-placeholder="cli.phAnio" required></div>
+          <div class="mb-3"><label class="form-label" for="v-tipo" data-i18n="veh.tipo"></label>
+            <select class="form-select" id="v-tipo" required>
+              <option value="CARRO" data-i18n="tipo.CARRO"></option>
+              <option value="MOTO" data-i18n="tipo.MOTO"></option>
+            </select></div>
+          <div class="mb-3"><label class="form-label" for="v-km" data-i18n="cli.kmActual"></label>
+            <input class="form-control" type="number" id="v-km" min="0" aria-describedby="v-km-ayuda" required>
+            <div id="v-km-ayuda" class="form-text" data-i18n="cli.kmCrearAyuda"></div></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-i18n="comun.cancelar"></button>
+          <button type="submit" class="btn btn-primary" data-i18n="comun.guardar"></button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/cliente.js"></script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n="titulo.admin"></title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800&display=swap">
+  <link rel="stylesheet" href="/css/estilos.css">
+</head>
+<body>
+  <a class="visually-hidden-focusable" href="#contenido" data-i18n="comun.saltar"></a>
+  <nav class="navbar navbar-dark barra-vino">
+    <div class="container d-flex flex-wrap gap-2">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="/index.html">
+        <i class="bi bi-car-front-fill" aria-hidden="true"></i><span data-i18n="app.nombre"></span>
+      </a>
+      <div class="d-flex flex-wrap align-items-center gap-2 ms-auto">
+        <span class="badge etiqueta-rol"><i class="bi bi-shield-lock" aria-hidden="true"></i> <span data-i18n="rol.ADMIN"></span></span>
+        <span class="text-white" id="saludo"></span>
+        <div class="btn-group btn-group-sm" role="group" data-i18n-aria="comun.idioma">
+          <button type="button" class="btn btn-outline-light" data-idioma="es">ES</button>
+          <button type="button" class="btn btn-outline-light" data-idioma="en">EN</button>
+          <button type="button" class="btn btn-outline-light" data-idioma="pt">PT</button>
+        </div>
+        <button type="button" class="btn btn-light btn-sm" id="salir">
+          <i class="bi bi-box-arrow-right" aria-hidden="true"></i> <span data-i18n="comun.salir"></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main id="contenido" class="container my-4">
+    <header class="encabezado-panel mb-4">
+      <h1 class="h3 fw-bold mb-2" data-i18n="adm.titulo"></h1>
+      <p class="mb-0" data-i18n="adm.descripcion"></p>
+    </header>
+
+    <div id="avisos" aria-live="polite"></div>
+
+    <section class="mb-5" aria-labelledby="t-talleres">
+      <h2 class="h4 mb-1" id="t-talleres"><i class="bi bi-tools texto-vino" aria-hidden="true"></i> <span data-i18n="adm.talleres"></span></h2>
+      <p class="text-muted small mb-2" data-i18n="adm.talleresAyuda"></p>
+      <p class="small mb-2" id="resumen-talleres"></p>
+      <div class="table-responsive tabla-blanca border">
+        <table class="table table-sm table-striped align-middle mb-0">
+          <caption class="visually-hidden" data-i18n="adm.talleres"></caption>
+          <thead><tr>
+            <th scope="col" data-i18n="comun.nombre"></th><th scope="col" data-i18n="comun.correo"></th>
+            <th scope="col" data-i18n="adm.estado"></th><th scope="col" data-i18n="adm.acciones"></th>
+          </tr></thead>
+          <tbody id="tabla-talleres"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section aria-labelledby="t-catalogo">
+      <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-1">
+        <h2 class="h4 mb-0" id="t-catalogo"><i class="bi bi-list-check texto-vino" aria-hidden="true"></i> <span data-i18n="adm.catalogo"></span></h2>
+        <button type="button" class="btn btn-primary" id="btn-nuevo">
+          <i class="bi bi-plus-lg" aria-hidden="true"></i> <span data-i18n="adm.nuevoServicio"></span>
+        </button>
+      </div>
+      <p class="text-muted small mb-2" data-i18n="adm.catalogoAyuda"></p>
+      <div class="table-responsive tabla-blanca border">
+        <table class="table table-sm table-striped align-middle mb-0">
+          <caption class="visually-hidden" data-i18n="adm.catalogo"></caption>
+          <thead><tr>
+            <th scope="col" data-i18n="comun.nombre"></th><th scope="col" data-i18n="adm.categoria"></th>
+            <th scope="col" data-i18n="adm.aplicaA"></th><th scope="col" data-i18n="adm.periodicidad"></th>
+            <th scope="col" data-i18n="adm.estado"></th><th scope="col" data-i18n="adm.acciones"></th>
+          </tr></thead>
+          <tbody id="tabla-servicios"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal fade" id="modal-servicio" tabindex="-1" aria-labelledby="t-modal" aria-hidden="true">
+    <div class="modal-dialog">
+      <form class="modal-content" id="form-servicio">
+        <div class="modal-header">
+          <h2 class="modal-title h5" id="t-modal"></h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" data-i18n-aria="comun.cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <p class="small text-muted" data-i18n="adm.modalAyuda"></p>
+          <div id="avisos-modal"></div>
+          <input type="hidden" id="s-id">
+          <div class="mb-3"><label class="form-label" for="s-nombre" data-i18n="comun.nombre"></label>
+            <input class="form-control" id="s-nombre" maxlength="100" data-i18n-placeholder="adm.phNombre" required></div>
+          <div class="mb-3"><label class="form-label" for="s-desc" data-i18n="adm.descripcionOpc"></label>
+            <textarea class="form-control" id="s-desc" rows="2"></textarea></div>
+          <div class="mb-3"><label class="form-label" for="s-categoria" data-i18n="adm.categoriaOpc"></label>
+            <input class="form-control" id="s-categoria" maxlength="60" data-i18n-placeholder="adm.phCategoria"></div>
+          <div class="mb-3"><label class="form-label" for="s-tipo" data-i18n="adm.aplicaA"></label>
+            <select class="form-select" id="s-tipo" aria-describedby="s-tipo-ayuda" required>
+              <option value="AMBOS" data-i18n="tipo.AMBOS"></option>
+              <option value="CARRO" data-i18n="tipo.CARRO"></option>
+              <option value="MOTO" data-i18n="tipo.MOTO"></option>
+            </select>
+            <div id="s-tipo-ayuda" class="form-text" data-i18n="adm.tipoAyuda"></div></div>
+          <div class="form-check mb-1">
+            <input class="form-check-input" type="checkbox" id="s-periodico" aria-describedby="s-periodico-ayuda">
+            <label class="form-check-label" for="s-periodico" data-i18n="adm.periodico"></label>
+          </div>
+          <div id="s-periodico-ayuda" class="form-text mb-3" data-i18n="adm.periodicoAyuda"></div>
+          <div id="grupo-periodico" class="row g-3 d-none">
+            <div class="col-6"><label class="form-label" for="s-intervalo" data-i18n="adm.intervalo"></label>
+              <input class="form-control" type="number" id="s-intervalo" min="1" aria-describedby="s-intervalo-ayuda">
+              <div id="s-intervalo-ayuda" class="form-text" data-i18n="adm.intervaloAyuda"></div></div>
+            <div class="col-6"><label class="form-label" for="s-margen" data-i18n="adm.margen"></label>
+              <input class="form-control" type="number" id="s-margen" min="0" aria-describedby="s-margen-ayuda">
+              <div id="s-margen-ayuda" class="form-text" data-i18n="adm.margenAyuda"></div></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-i18n="comun.cancelar"></button>
+          <button type="submit" class="btn btn-primary" data-i18n="comun.guardar"></button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>

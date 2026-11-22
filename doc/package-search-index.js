@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html","k":"18"},{"l":"co.edu.usco.vehiculos"},{"l":"co.edu.usco.vehiculos.controlador"},{"l":"co.edu.usco.vehiculos.dto"},{"l":"co.edu.usco.vehiculos.modelo"},{"l":"co.edu.usco.vehiculos.repositorio"},{"l":"co.edu.usco.vehiculos.seguridad"},{"l":"co.edu.usco.vehiculos.servicio"}];updateSearchResults();
